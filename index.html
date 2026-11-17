@@ -2,7 +2,7 @@
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Кафе «BotinoksCity»</title>
-<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=f4ImfZoQ_BW_SDOt7wlUskT69pD92guTkl0_DRweBWNfwnR4W40qF8Tb6YEV-klY0rAQVuV3zgYIcDw82JOmgdesHTwThII8ibF4jtrK4uASMkpTTxpszPXKGrLjaktMxMwyIKCaHjXGtWhhsh-1fZQJ2-A-ZCs1McRmsmrhNvE_lii4EGASIoQr3wvvyjjkZ6y-1cnVN3uJDJZ3TGVW72Y5DXBeoaBVy0909owusWp0GxsUajK9Xma3PxqogUvRSH-HqqhWTHOeZLlDpORN3iYZn1QHuNzalHSqS-dT-66OSBhVyMq5DKxdrDCltwVL" charset="UTF-8"></script><script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=XqP0-GkI4c0F9B_bvdMKlmLOWVjUkTL1hL0J8DuOSS68YaRAAuMZa7-N6CXcCQnTe539UebLsJqJ-J9V5hVOn6jTI5XWrkJj7RKzqZumSjqxlSXcaBNk69ynzjAWFfGDVGmeghytIBBlYaL9mZoCSbDECvLso_EuVj6BkHnug9VRmxT_07_Qv9FEpewzHoczguARmWXCZNrS9o0kbXPbLNqb7HDnwh65ZL-j7aLGgRAvXro-oDDrzB79a0PhCQP8jMIpqDpV5nyCOEMKN9pFxbU6J5B2TKN2qVRhdEWT6BGBzLXNWuc720VrJZ_qnxns" charset="UTF-8"></script><script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Neucha&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#e9f2e4;--ink:#2f3b52;--mint:#6cc5a1;--butter:#ffd978;--coral:#f2735f;--card:#fffaf0;--btn:#2f3b52}
@@ -16,8 +16,10 @@ button{font:inherit;color:var(--ink);background:var(--butter);border:2.5px solid
 button:active{transform:translate(2px,3px);box-shadow:none}
 button:disabled{opacity:.5}
 button.pri{background:var(--btn);color:#fff}
-h1{font-size:36px;margin:0;line-height:1}h2{margin:0;font-size:24px}p{margin:4px 0}
+h1{font-size:36px;margin:0;line-height:1}h2{margin:0;font-size:22px;line-height:1.1}p{margin:4px 0}
 .c{text-align:center}.row{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.hdr{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 0 4px}
+.bk{padding:5px 12px;font-size:15px;line-height:1.1;border-radius:12px 6px 12px 6px;box-shadow:2px 2px 0 var(--ink);margin-left:auto;flex:none}
 .bar{height:12px;border:2px solid var(--ink);border-radius:8px;background:#fff;overflow:hidden}
 .bar i{display:block;height:100%;width:100%;background:var(--mint)}.bar.p i{background:var(--coral)}
 #top{display:flex;justify-content:space-between;align-items:center;border-radius:12px;padding:4px 8px}
@@ -60,9 +62,9 @@ h1{font-size:36px;margin:0;line-height:1}h2{margin:0;font-size:24px}p{margin:4px
  <div id="tabs"></div><div id="grid"></div>
  <div id="acts"><button id="bClr">🗑</button><button class="pri" id="bServe">Подать</button><button id="bBk">📖</button></div>
 </section>
-<section id="kit" class="scr"><h2>Кухня</h2><div class="box">Монеты: <b id="coins"></b> 🪙</div><div id="ups" class="up"></div><h2>Украшения</h2><div id="decl" class="up"></div><button id="kBack">Назад</button></section>
-<section id="book" class="scr"><h2>Книга рецептов</h2><div id="bl" class="up"></div><button id="bkBack">Назад</button></section>
-<section id="diary" class="scr"><h2>Дневник</h2><div id="dyl" class="up"></div><button id="dyBack">Назад</button></section>
+<section id="kit" class="scr"><div class="hdr"><h2>Кухня и улучшения</h2><button class="bk" id="kBack">Назад</button></div><div class="box">Монеты: <b id="coins"></b> 🪙</div><div id="ups" class="up"></div><h2>Украшения</h2><div id="decl" class="up"></div></section>
+<section id="book" class="scr"><div class="hdr"><h2>Книга рецептов</h2><button class="bk" id="bkBack">Назад</button></div><div id="bl" class="up"></div></section>
+<section id="diary" class="scr"><div class="hdr"><h2>Дневник</h2><button class="bk" id="dyBack">Назад</button></div><div id="dyl" class="up"></div></section>
 <section id="res" class="scr"><h2 class="c" id="rt"></h2><div class="box" id="rb"></div><button class="pri" id="rOk">Продолжить</button></section>
 <canvas id="fx"></canvas><div id="fl"></div>
 <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
@@ -198,7 +200,7 @@ const UP=[{id:'pat',n:'Уютные кресла',d:'+4 сек терпения 
 {id:'hint',n:'Умная плита',d:'1: точка у нужной станции, 2: подсветка продуктов',b:80,m:2},{id:'tip',n:'Копилка чаевых',d:'+25% монет',b:70,m:3}];
 /* ===== UI helpers ===== */
 let G=null;
-const show=id=>{setBg();document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id===id))};
+const show=id=>{setBg();document.querySelectorAll('.scr').forEach(s=>{s.classList.toggle('on',s.id===id);if(s.id===id)s.scrollTop=0})};
 function say(lines,cb){let i=0;show('dlg');const n=()=>{if(i>=lines.length){cb&&cb();return}const l=lines[i++],c=CH[l[0]];$('#dav').innerHTML=l[0]==='n'?'<div style="font-size:96px">🏦</div>':face(c,150);$('#dnm').textContent=c.n;$('#dtx').textContent=l[1];snd(520,.05,'triangle',.06)};$('#dlg').onclick=n;n()}
 function menu(){const q=DQ[dayN()%3],dn=S.dl.last===dKey();$('#hello').textContent='Привет, '+user+'!';$('#stat').textContent='Монеты: '+S.coins+' 🪙   Рекорд: '+S.best;
  $('#dq').textContent='📅 '+q[0]+(dn?' ✅':'');$('#dec').textContent=DEC.filter(d=>S.dec[d.id]).map(d=>d.e).join(' ');
