@@ -59,6 +59,7 @@ h1{font-size:36px;margin:0;line-height:1}h2{margin:0;font-size:24px}p{margin:4px
 <section id="book" class="scr"><h2>Книга рецептов</h2><div id="bl" class="up"></div><button id="bkBack">Назад</button></section>
 <section id="res" class="scr"><h2 class="c" id="rt"></h2><div class="box" id="rb"></div><button class="pri" id="rOk">Продолжить</button></section>
 <canvas id="fx"></canvas><div id="fl"></div>
+<audio id="bgm" src="music.mp3" loop preload="auto"></audio>
 <script>
 'use strict';
 /* ===== Telegram ===== */
@@ -74,16 +75,17 @@ const store={
  set(k,v){try{localStorage.setItem(k,v)}catch(e){}try{if(tg&&tg.CloudStorage&&tg.isVersionAtLeast('6.9'))tg.CloudStorage.setItem(k,v)}catch(e){}}};
 let S={ch:0,coins:0,up:{pat:0,time:0,hint:0,tip:0},fin:0,best:0,seen:-1,mute:0};
 const save=()=>store.set('hyperbank',JSON.stringify(S));
-/* ===== Audio (Web Audio, no files) ===== */
+/* ===== Audio ===== */
 let AC,mt,step=0;
+const bgm=$('#bgm');
+function syncBgm(){if(!bgm)return;bgm.volume=.35;if(S.mute)bgm.pause();else bgm.play().catch(()=>{})}
+addEventListener('pointerdown',()=>{if(!S.mute&&bgm&&bgm.paused)syncBgm()},{passive:true});
 function snd(f,d,type,v,s){if(S.mute)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();
  const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+(s||0);o.type=type||'sine';o.frequency.value=f;
  g.gain.setValueAtTime(v||.15,t);g.gain.exponentialRampToValueAtTime(.001,t+(d||.1));o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+(d||.1))}catch(e){}}
 const sGood=()=>[523,659,784,1047].forEach((f,i)=>snd(f,.15,'triangle',.12,i*.07));
 const sBad=()=>{snd(160,.25,'sawtooth',.12);snd(120,.3,'sawtooth',.1,.1)};
-function music(){clearTimeout(mt);if(!G||!G.on)return;const b=[130.8,146.8,164.8,196.0][(step>>3)%4],p=[523,587,659,784,880];
- if(step%2===0)snd(b,.3,'triangle',.07);if(step%4===2)snd(3000,.03,'square',.015);
- if(Math.random()<.45)snd(p[Math.random()*5|0]*(G.fever?2:1),.18,'sine',.04);step++;mt=setTimeout(music,G.fever?170:270)}
+function music(){syncBgm()}
 /* ===== Data ===== */
 const CN=['Основа','Белок','Специи','Глазурь'],CE=['🍚','🍗','🌶️','🍯'];
 const ING=[['rice','🍚','Рис'],['noodle','🍜','Лапша'],['bread','🍞','Хлеб'],['dough','🥟','Тесто'],['potato','🥔','Картошка'],['tort','🫓','Лепёшка'],
@@ -127,7 +129,7 @@ let G=null;
 const show=id=>{document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id===id))};
 function say(lines,cb){let i=0;show('dlg');const n=()=>{if(i>=lines.length){cb&&cb();return}const l=lines[i++];$('#dav').textContent=l[0];$('#dtx').textContent=l[1];snd(520,.05,'triangle',.06)};$('#dlg').onclick=n;n()}
 function menu(){$('#hello').textContent='Привет, '+user+'!';$('#stat').textContent='Монеты: '+S.coins+' 🪙   Рекорд: '+S.best;
- $('#bPlay').textContent=S.fin?'Свободная смена':'Играть: '+ST[S.ch].t;$('#bMute').textContent=S.mute?'🔇 Звук: выкл':'🔊 Звук: вкл';show('menu')}
+ $('#bPlay').textContent=S.fin?'Свободная смена':'Играть: '+ST[S.ch].t;$('#bMute').textContent=S.mute?'🔇 Звук: выкл':'🔊 Звук: вкл';syncBgm();show('menu')}
 function flt(txt,x,y,col){const d=document.createElement('div');d.textContent=txt;d.style.cssText='left:'+x+'px;top:'+y+'px;color:'+(col||'#2f3b52');$('#fl').appendChild(d);setTimeout(()=>d.remove(),900)}
 const fx=$('#fx'),cx=fx.getContext('2d');let P=[];
 function sz(){fx.width=innerWidth;fx.height=innerHeight}addEventListener('resize',sz);sz();
@@ -185,7 +187,7 @@ $('#rOk').onclick=()=>{
  if(S.fin||!G.win&&!G.spOk&&false)return menu();
  const st=ST[S.ch];say(G.spOk?st.win:st.lose,()=>{if(!G.win)return menu();if(S.ch<3){S.ch++;save();menu()}else{S.fin=1;save();say(EPI,menu)}})};
 /* ===== Menu, kitchen, book ===== */
-$('#bPlay').onclick=()=>{if(!S.fin&&S.seen<S.ch){S.seen=S.ch;save();say(ST[S.ch].intro,startShift)}else startShift()};
+$('#bPlay').onclick=()=>{syncBgm();if(!S.fin&&S.seen<S.ch){S.seen=S.ch;save();say(ST[S.ch].intro,startShift)}else startShift()};
 $('#bMute').onclick=()=>{S.mute=S.mute?0:1;save();menu()};
 $('#bKit').onclick=kit;$('#kBack').onclick=menu;$('#bkBack').onclick=()=>{if(G&&G.on)show('game');else menu()};
 function kit(){$('#coins').textContent=S.coins;
