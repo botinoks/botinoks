@@ -2,7 +2,7 @@
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Кафе «BotinoksCity»</title>
-<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=XqP0-GkI4c0F9B_bvdMKlmLOWVjUkTL1hL0J8DuOSS68YaRAAuMZa7-N6CXcCQnTe539UebLsJqJ-J9V5hVOn6jTI5XWrkJj7RKzqZumSjqxlSXcaBNk69ynzjAWFfGDVGmeghytIBBlYaL9mZoCSbDECvLso_EuVj6BkHnug9VRmxT_07_Qv9FEpewzHoczguARmWXCZNrS9o0kbXPbLNqb7HDnwh65ZL-j7aLGgRAvXro-oDDrzB79a0PhCQP8jMIpqDpV5nyCOEMKN9pFxbU6J5B2TKN2qVRhdEWT6BGBzLXNWuc720VrJZ_qnxns" charset="UTF-8"></script><script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Neucha&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#e9f2e4;--ink:#2f3b52;--mint:#6cc5a1;--butter:#ffd978;--coral:#f2735f;--card:#fffaf0;--btn:#2f3b52}
@@ -18,8 +18,6 @@ button:disabled{opacity:.5}
 button.pri{background:var(--btn);color:#fff}
 h1{font-size:36px;margin:0;line-height:1}h2{margin:0;font-size:22px;line-height:1.1}p{margin:4px 0}
 .c{text-align:center}.row{display:flex;gap:8px;align-items:center;justify-content:space-between}
-.hdr{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 0 4px}
-.bk{padding:5px 12px;font-size:15px;line-height:1.1;border-radius:12px 6px 12px 6px;box-shadow:2px 2px 0 var(--ink);margin-left:auto;flex:none}
 .bar{height:12px;border:2px solid var(--ink);border-radius:8px;background:#fff;overflow:hidden}
 .bar i{display:block;height:100%;width:100%;background:var(--mint)}.bar.p i{background:var(--coral)}
 #top{display:flex;justify-content:space-between;align-items:center;border-radius:12px;padding:4px 8px}
@@ -62,9 +60,9 @@ h1{font-size:36px;margin:0;line-height:1}h2{margin:0;font-size:22px;line-height:
  <div id="tabs"></div><div id="grid"></div>
  <div id="acts"><button id="bClr">🗑</button><button class="pri" id="bServe">Подать</button><button id="bBk">📖</button></div>
 </section>
-<section id="kit" class="scr"><div class="hdr"><h2>Кухня и улучшения</h2><button class="bk" id="kBack">Назад</button></div><div class="box">Монеты: <b id="coins"></b> 🪙</div><div id="ups" class="up"></div><h2>Украшения</h2><div id="decl" class="up"></div></section>
-<section id="book" class="scr"><div class="hdr"><h2>Книга рецептов</h2><button class="bk" id="bkBack">Назад</button></div><div id="bl" class="up"></div></section>
-<section id="diary" class="scr"><div class="hdr"><h2>Дневник</h2><button class="bk" id="dyBack">Назад</button></div><div id="dyl" class="up"></div></section>
+<section id="kit" class="scr"><h2>Кухня и улучшения</h2><div class="box">Монеты: <b id="coins"></b> 🪙</div><div id="ups" class="up"></div><h2>Украшения</h2><div id="decl" class="up"></div></section>
+<section id="book" class="scr"><h2>Книга рецептов</h2><div id="bl" class="up"></div></section>
+<section id="diary" class="scr"><h2>Дневник</h2><div id="dyl" class="up"></div></section>
 <section id="res" class="scr"><h2 class="c" id="rt"></h2><div class="box" id="rb"></div><button class="pri" id="rOk">Продолжить</button></section>
 <canvas id="fx"></canvas><div id="fl"></div>
 <audio id="bgm" src="music.mp3" loop preload="auto"></audio>
@@ -199,8 +197,15 @@ function setBg(){const k=S.fin?7:S.ch,b=$('#bg');b.style.background='linear-grad
 const UP=[{id:'pat',n:'Уютные кресла',d:'+4 сек терпения клиента',b:50,m:3},{id:'time',n:'Часы с подзаводом',d:'+8 сек к смене',b:60,m:3},
 {id:'hint',n:'Умная плита',d:'1: точка у нужной станции, 2: подсветка продуктов',b:80,m:2},{id:'tip',n:'Копилка чаевых',d:'+25% монет',b:70,m:3}];
 /* ===== UI helpers ===== */
-let G=null;
-const show=id=>{setBg();document.querySelectorAll('.scr').forEach(s=>{s.classList.toggle('on',s.id===id);if(s.id===id)s.scrollTop=0})};
+let G=null,curScr='menu';
+const BACK_SCRS=['kit','book','diary'];
+function goBack(){if(curScr==='book'&&G&&G.on)show('game');else menu()}
+if(tg&&tg.BackButton){try{tg.BackButton.onClick(goBack)}catch(e){}}
+const show=id=>{
+ curScr=id;setBg();
+ document.querySelectorAll('.scr').forEach(s=>{s.classList.toggle('on',s.id===id);if(s.id===id)s.scrollTop=0});
+ if(tg&&tg.BackButton){try{BACK_SCRS.includes(id)?tg.BackButton.show():tg.BackButton.hide()}catch(e){}}
+};
 function say(lines,cb){let i=0;show('dlg');const n=()=>{if(i>=lines.length){cb&&cb();return}const l=lines[i++],c=CH[l[0]];$('#dav').innerHTML=l[0]==='n'?'<div style="font-size:96px">🏦</div>':face(c,150);$('#dnm').textContent=c.n;$('#dtx').textContent=l[1];snd(520,.05,'triangle',.06)};$('#dlg').onclick=n;n()}
 function menu(){const q=DQ[dayN()%3],dn=S.dl.last===dKey();$('#hello').textContent='Привет, '+user+'!';$('#stat').textContent='Монеты: '+S.coins+' 🪙   Рекорд: '+S.best;
  $('#dq').textContent='📅 '+q[0]+(dn?' ✅':'');$('#dec').textContent=DEC.filter(d=>S.dec[d.id]).map(d=>d.e).join(' ');
@@ -243,7 +248,7 @@ function add(id,x,y){
   G.plate=[];G.c.pat-=4;G.combo=0;G.fever=0;flt('🔥 Конфликт вкусов!',x-60,y-30,'#f2735f');shake();sBad();note('error');return draw()}
  G.plate.push(id);snd(440+G.plate.length*110,.08,'triangle',.12);hap('light');draw()}
 $('#bClr').onclick=()=>{if(G&&G.on){G.plate=[];snd(300,.08);hap();draw()}};
-$('#bBk').onclick=()=>{if(G&&G.on)openBook(1)};
+$('#bBk').onclick=()=>{if(G&&G.on)openBook()};
 $('#bServe').onclick=()=>{
  if(!G||!G.on||!G.c)return;const r=G.c.rec,ok=G.plate.length===4&&r.i.every(x=>G.plate.includes(x)),cx0=innerWidth/2,cy0=innerHeight*.35,ev=G.ev?G.ev.id:'';
  if(ok){G.combo++;G.bc=Math.max(G.bc,G.combo);G.fever=G.combo>=5?1:0;const syn=SYN.filter(p=>p.every(x=>r.i.includes(x))).length,k=G.c.pat/G.c.max,
@@ -269,7 +274,7 @@ $('#rOk').onclick=()=>{
 /* ===== Menu, kitchen, book, diary ===== */
 $('#bPlay').onclick=()=>{syncBgm();if(!S.fin&&S.seen<S.ch){S.seen=S.ch;save();say(ST[S.ch].intro,startShift)}else startShift()};
 $('#bMute').onclick=()=>{S.mute=S.mute?0:1;save();menu()};
-$('#bKit').onclick=kit;$('#kBack').onclick=menu;$('#dyBack').onclick=menu;$('#bDiary').onclick=diary;$('#bkBack').onclick=()=>{if(G&&G.on)show('game');else menu()};
+$('#bKit').onclick=kit;$('#bDiary').onclick=diary;
 function kit(){$('#coins').textContent=S.coins;
  $('#ups').innerHTML=UP.map(u=>{const l=S.up[u.id],cost=u.b*(l+1),mx=l>=u.m;return '<div class="box row"><div><b>'+u.n+'</b><p>'+u.d+'</p><span class="pip">'+'●'.repeat(l)+'○'.repeat(u.m-l)+'</span></div><button data-u="'+u.id+'" '+(mx||S.coins<cost?'disabled':'')+'>'+(mx?'Макс':cost+' 🪙')+'</button></div>'}).join('');
  $('#decl').innerHTML=DEC.map(d=>'<div class="box row"><div><b>'+d.e+' '+d.n+'</b><p>'+d.d+'</p></div><button data-d="'+d.id+'" '+(S.dec[d.id]||S.coins<d.c?'disabled':'')+'>'+(S.dec[d.id]?'Куплено':d.c+' 🪙')+'</button></div>').join('');show('kit')}
