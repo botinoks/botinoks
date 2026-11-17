@@ -2,7 +2,7 @@
 <html lang="ru"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Кафе «BotinoksCity»</title>
-<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=Un3M4Ha_t3O-_eX8XBuZgfeXa8O0KleGsYKOLjBZTvNYfU-3Yw5ZF7hejSaVj9O5pgRRcyTs-Mv0_K8V8H1jbTSWtakPpz1_YALbGYK7kQfMoZW-qoskj65FEQtSJIno-7dHHBqrzozBKeLgVi_TLTU0YbiEhwg6n8XmzSSodzHbIoMyDypq7a3Ezx9qb0oTqJAsW872UkQTVZNkT0h-FKLzCjASWRuFhUPkBc1OKC-N-joF8nPwClgO_2VtafP232tjkx5iijMAOcpUefMEHUCdb5DmAfuY_bGi2pExxqEz8RPFJERehYMbwVtgYFsZ" charset="UTF-8"></script><script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=f4ImfZoQ_BW_SDOt7wlUskT69pD92guTkl0_DRweBWNfwnR4W40qF8Tb6YEV-klY0rAQVuV3zgYIcDw82JOmgdesHTwThII8ibF4jtrK4uASMkpTTxpszPXKGrLjaktMxMwyIKCaHjXGtWhhsh-1fZQJ2-A-ZCs1McRmsmrhNvE_lii4EGASIoQr3wvvyjjkZ6y-1cnVN3uJDJZ3TGVW72Y5DXBeoaBVy0909owusWp0GxsUajK9Xma3PxqogUvRSH-HqqhWTHOeZLlDpORN3iYZn1QHuNzalHSqS-dT-66OSBhVyMq5DKxdrDCltwVL" charset="UTF-8"></script><script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Neucha&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#e9f2e4;--ink:#2f3b52;--mint:#6cc5a1;--butter:#ffd978;--coral:#f2735f;--card:#fffaf0;--btn:#2f3b52}
@@ -96,14 +96,14 @@ function gen(){clearTimeout(mt);if(!G||!G.on||bgmOk)return;const b=[130.8,146.8,
  if(step%2===0)snd(b,.3,'triangle',.07);if(step%4===2)snd(3000,.03,'square',.015);
  if(Math.random()<.45)snd(p[Math.random()*5|0]*(G.fever?2:1),.18,'sine',.04);step++;mt=setTimeout(music,G.fever?170:270)}
 /* ===== Data ===== */
-const CN=['Основа','Белок','Специи','Глазурь'],CE=['🍚','🍗','🌶️','🍯'];
+const CN=['Основа','Мясное','Специи','Добавка'],CE=['🍚','🍗','🌶️','🍯'];
 const ING=[['rice','🍚','Рис'],['noodle','🍜','Лапша'],['bread','🍞','Хлеб'],['dough','🥟','Тесто'],['potato','🥔','Картошка'],['tort','🫓','Лепёшка'],
 ['chick','🍗','Курица'],['egg','🥚','Яйцо'],['fish','🐟','Рыба'],['cheese','🧀','Сыр'],['mush','🍄','Грибы'],['bacon','🥓','Бекон'],
 ['pepper','🌶️','Перец'],['garlic','🧄','Чеснок'],['basil','🌿','Базилик'],['onion','🧅','Лук'],['lemon','🍋','Лимон'],['cinn','🍂','Корица'],
 ['honey','🍯','Мёд'],['soy','🥫','Соевый'],['cream','🥛','Сливки'],['tomato','🍅','Томат'],['mint','🍃','Мята'],['choc','🍫','Шоколад']];
 const I={};ING.forEach((x,i)=>I[x[0]]={e:x[1],n:x[2],c:i/6|0});
 const SP=[0,4,7,12,13,14,15,9];
-const GOAL=[800,950,1100,1250,1400,1550,1700,1900];
+const GOAL=[550,650,750,850,950,1050,1150,1300];
 const R=[['Суп-обнимашка','уют и воспоминания','potato chick onion cream',0],['Тост «Доброе утро»','бодрое начало дня','bread egg basil tomato',0],
 ['Рис «Солнышко»','лёгкость и свет','rice egg pepper soy',0],['Лапша «Перезагрузка»','сбой и перезапуск','noodle mush garlic soy',1],
 ['Пирожок «Бит-бит»','тепло внутри, сюрприз','dough cheese onion cream',1],['Такос «Быстрый запуск»','быстро и остро','tort bacon pepper tomato',1],
@@ -211,7 +211,7 @@ function burst(x,y,n){for(let i=0;i<(n||16);i++)P.push({x,y,vx:(Math.random()-.5
 const shake=()=>{const g=$('#game');g.classList.remove('shk');void g.offsetWidth;g.classList.add('shk')};
 /* ===== Shift ===== */
 function startShift(){
- const T=70+S.up.time*8;G={on:1,T,t:T,score:0,combo:0,bc:0,fever:0,served:0,lost:0,tips:0,syn:0,spOk:0,spDone:0,plate:[],cat:0,c:null,ev:Math.random()<.7?pk(EV):null};
+ const T=50+S.up.time*8;G={on:1,T,t:T,score:0,combo:0,bc:0,fever:0,served:0,lost:0,tips:0,syn:0,spOk:0,spDone:0,plate:[],cat:0,c:null,ev:Math.random()<.7?pk(EV):null};
  $('#ev').textContent=G.ev?G.ev.n:'';try{tg.enableClosingConfirmation()}catch(e){}
  show('game');spawn();draw();step=0;music();G.iv=setInterval(tick,100)}
 function spawn(){
