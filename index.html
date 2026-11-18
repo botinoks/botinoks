@@ -79,7 +79,7 @@ const note=t=>{try{tg.HapticFeedback.notificationOccurred(t)}catch(e){}};
 const store={
  get:k=>new Promise(r=>{const l=()=>localStorage.getItem(k);try{if(tg&&tg.CloudStorage&&tg.isVersionAtLeast('6.9')){tg.CloudStorage.getItem(k,(e,v)=>r(!e&&v?v:l()));return}}catch(e){}r(l())}),
  set(k,v){try{localStorage.setItem(k,v)}catch(e){}try{if(tg&&tg.CloudStorage&&tg.isVersionAtLeast('6.9'))tg.CloudStorage.setItem(k,v)}catch(e){}}};
-let S={ch:0,coins:0,up:{pat:0,time:0,hint:0,tip:0},fin:0,best:0,seen:-1,mute:0,dec:{},ach:{},earn:0,dl:{last:'',streak:0}};
+let S={ch:0,coins:0,up:{pat:0,time:0,tip:0},fin:0,best:0,seen:-1,mute:0,dec:{},ach:{},earn:0,dl:{last:'',streak:0}};
 const save=()=>store.set('hyperbank',JSON.stringify(S));
 /* ===== Audio (Web Audio, no files) ===== */
 let AC,mt,step=0;
@@ -195,7 +195,7 @@ function skyline(){let a='<svg viewBox="0 0 400 180" preserveAspectRatio="none">
 $('#bg').innerHTML=skyline();
 function setBg(){const k=S.fin?7:S.ch,b=$('#bg');b.style.background='linear-gradient('+SKY[k][0]+','+SKY[k][1]+')';b.style.setProperty('--wo',WO[k])}
 const UP=[{id:'pat',n:'Уютные кресла',d:'+4 сек терпения клиента',b:200,m:3},{id:'time',n:'Часы с подзаводом',d:'+8 сек к смене',b:250,m:3},
-{id:'hint',n:'Умная плита',d:'1: точка у нужной станции, 2: подсветка продуктов',b:320,m:2},{id:'tip',n:'Копилка чаевых',d:'+25% монет',b:280,m:3}];
+{id:'tip',n:'Копилка чаевых',d:'+25% монет',b:220,m:3}];
 /* ===== UI helpers ===== */
 let G=null,curScr='menu';
 const BACK_SCRS=['kit','book','diary'];
@@ -288,5 +288,5 @@ $('#bBook').onclick=openBook;
 function diary(){const q=DQ[dayN()%3],dn=S.dl.last===dKey(),st=(dn||S.dl.last===String(dayN()-1))?S.dl.streak:0;
  $('#dyl').innerHTML='<div class="box"><b>📅 Задание дня</b><p>'+q[0]+'</p><p>'+(dn?'Выполнено ✅':'Награда: от 120 до 200 🪙')+'. Серия дней: '+st+'</p></div>'+ACH.map(a=>'<div class="box" style="'+(S.ach[a[0]]?'':'opacity:.55')+'"><b>'+(S.ach[a[0]]?'🏅 ':'🔒 ')+a[1]+'</b><p>'+a[2]+'</p></div>').join('');show('diary')}
 /* ===== Boot ===== */
-store.get('hyperbank').then(v=>{try{if(v){const o=JSON.parse(v);S=Object.assign(S,o);S.up=Object.assign({pat:0,time:0,hint:0,tip:0},o.up);S.dec=o.dec||{};S.ach=o.ach||{};S.dl=Object.assign({last:'',streak:0},o.dl)}}catch(e){}menu()});
+store.get('hyperbank').then(v=>{try{if(v){const o=JSON.parse(v);S=Object.assign(S,o);S.up=Object.assign({pat:0,time:0,tip:0},o.up);S.dec=o.dec||{};S.ach=o.ach||{};S.dl=Object.assign({last:'',streak:0},o.dl)}}catch(e){}menu()});
 </script></body></html>
